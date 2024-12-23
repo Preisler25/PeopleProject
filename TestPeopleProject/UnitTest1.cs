@@ -150,7 +150,21 @@ namespace TestPeopleProject
             });
             var person = _personStatistics.GetPersonWithHighestScore();
             Assert.AreNotEqual("Alice", person.Name);
+            Assert.AreEqual("Bob", person.Name);
         }
+
+        [Test]
+        public void GetPersonWithHighestScore_HelyesListaban_FelnotLegtobbPont_VisszaAdd()
+        {
+            PersonStatistics _personStatistics = new PersonStatistics(new List<Person> {
+                new Person("Alice", 20, true, 85),
+                new Person("Bob", 21, false, 86),
+            });
+            var person = _personStatistics.GetPersonWithHighestScore();
+            Assert.AreNotEqual("Alice", person.Name);
+            Assert.AreEqual("Bob", person.Name);
+        }
+
 
 
 
@@ -174,6 +188,28 @@ namespace TestPeopleProject
                 new Person("Bob", 21, true, 86),
             });
             Assert.AreEqual(85.5, _personStatistics.GetAverageScoreOfStudents(), 0.01);
+        }
+
+        [Test]
+        public void GetAverageScoreOfStudents_HelyesListaval_DeVanBenneTanar_TortAtlaggal_HelyesenAddVissza()
+        {
+            PersonStatistics _personStatistics = new PersonStatistics(new List<Person> {
+                new Person("Alice", 20, true, 85),
+                new Person("Bob", 21, true, 86),
+                new Person("Charlie", 21, false, 86),
+            });
+            Assert.AreEqual(85.5, _personStatistics.GetAverageScoreOfStudents(), 0.01);
+        }
+
+        [Test]
+        public void GetAverageScoreOfStudents_HelyesListaval_DeCsakTanarVanBenne_NullatAddVissza()
+        {
+            PersonStatistics _personStatistics = new PersonStatistics(new List<Person> {
+                new Person("Alice", 20, false, 85),
+                new Person("Bob", 21, false, 86),
+                new Person("Charlie", 21, false, 86),
+            });
+            Assert.AreEqual(0, _personStatistics.GetAverageScoreOfStudents(), 0.01);
         }
 
         [Test]
@@ -215,6 +251,31 @@ namespace TestPeopleProject
             Assert.AreEqual(null, person);
         }
 
+        [Test]
+        public void GetOldestStudent_HelyesListaval_DeVanBenneTanar_KisebbIndexutAdjaVissza()
+        {
+            PersonStatistics _personStatistics = new PersonStatistics(new List<Person> {
+                new Person("Alice", 22, true, 85),
+                new Person("Bob", 21, true, 86),
+                new Person("Charlie", 21, false, 86),
+            });
+            var person = _personStatistics.GetOldestStudent();
+            Assert.AreEqual("Alice", person.Name);
+        }
+
+        [Test]
+        public void GetOldestStudent_HelyesListaval_CsakTanarVanBenne_NulltAddVissza()
+        {
+            PersonStatistics _personStatistics = new PersonStatistics(new List<Person> {
+                new Person("Alice", 22, false, 85),
+                new Person("Bob", 21, false, 86),
+                new Person("Charlie", 21, false, 86),
+            });
+            var person = _personStatistics.GetOldestStudent();
+            Assert.AreEqual(null, person);
+        }
+
+
         //IsAnyoneFailing
 
         [Test]
@@ -230,6 +291,28 @@ namespace TestPeopleProject
             PersonStatistics _personStatistics = new PersonStatistics(new List<Person> { 
                 new Person("Alice", 20, true, 39),
                 new Person("Bob", 21, true, 85),
+            });
+            Assert.IsTrue(_personStatistics.IsAnyoneFailing());
+        }
+
+        [Test]
+        public void IsAnyoneFailing_HelyesListaval_EgyemberBukik_VanBenneTanar_TruetAddVissza()
+        {
+            PersonStatistics _personStatistics = new PersonStatistics(new List<Person> {
+                new Person("Alice", 20, true, 39),
+                new Person("Bob", 21, true, 85),
+                new Person("Charlie", 21, false, 86),
+            });
+            Assert.IsTrue(_personStatistics.IsAnyoneFailing());
+        }
+
+        [Test]
+        public void IsAnyoneFailing_HelyesListaval_TanarBukik_TruetAddVissza()
+        {
+            PersonStatistics _personStatistics = new PersonStatistics(new List<Person> {
+                new Person("Alice", 20, true, 49),
+                new Person("Bob", 21, true, 85),
+                new Person("Charlie", 21, false, 39),
             });
             Assert.IsTrue(_personStatistics.IsAnyoneFailing());
         }
